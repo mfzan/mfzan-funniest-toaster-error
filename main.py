@@ -11,6 +11,9 @@ ENTRY = "ERR 0xBREAD: Toast ejected for loafing on the job. Insert a slice that 
 
 
 def main() -> None:
+    # Gate check, mirroring the bounty rule: 1-120 chars, one line.
+    if not (1 <= len(ENTRY) <= 120) or "\n" in ENTRY:
+        raise ValueError("entry must be a single line of 1-120 characters")
     os.umask(0o022)
     os.makedirs("/output", exist_ok=True)
     path = "/output/entry.txt"
